@@ -1,11 +1,118 @@
 {{extend 'layout.html'}}
 
 {{block head}}
+<script src="{{=URL('static', 'js/vue.js')}}"></script>
 {{end}}
 
 <div class="main_content">
 
   <!-- Here goes your main HTML code. -->
-
+  
+  <!-- this line of code took 5 years off my life span -->
+  <div id="vue-div" class="display:none">
+     <div class="padded">
+       <h2>Welcome to Stock Tracker!</h2> 
+       
+     <!-- tabs -->
+        <div class="container">
+         <div class="quarter">
+           <div class="padded">
+             <label class="btn fill teal" for="myStocksTab">My Stocks</label>
+             <label class="btn fill teal" for="trendingTab">Trending</label>
+             <label class="btn fill teal" for="searchTab">Search</label>
+           </div>
+         </div>
+     <!-- colors dont fucking work???  -->
+         
+     <!-- drop down for my stocks tab  -->
+         <div class="threequarters">
+           <div class="accordion">
+             <!-- radio here is to keep the state of the accordion
+                  its id must be unique and referenced by the label -->
+             <input type="radio" name="group1" id="myStocksTab">
+             <div>
+               {{if auth.user is not None:}}
+               <div class="padded">
+                 <h6>heres your shit</h6>
+               </div>
+               {{else:}}
+               <div class="padded">
+                 <h4>Log in to see your stocks!</h4>
+               </div>
+               {{pass}}
+             </div>
+           </div>
+           
+     <!-- drop down for trending tab  -->
+           <div class="accordion">
+             <input type="radio" name="group1" id="trendingTab">
+              <div>
+                <div class="padded">
+                  <h6>Some trending shit</h6>
+                  <!-- put this in a loop for every displayed stock -->
+                  <!-- cards for every stock -->
+                    <div class="container">
+                      <div class="card" style="width:500px; height:200px">
+                        <div>
+                          <div class="white padded rounded">
+                            Front! Mouseover here.
+                          </div>
+                          <div class="black padded rounded">
+                            Back!
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="container padded">
+                        <label class="quarter right"></label>
+                        <button v-if="!managing_stocks" v-on:click="manage_button()">Manage</button>
+                      </div>
+                     
+                      <div v-if="managing_stocks" class="container padded">
+                        <div class="quarter">
+                          <input type="text" class="fill">
+                        </div>
+                      </div>
+                      
+                      <div class="button_bar padded">
+            
+                        <button v-if="managing_stocks" v-on:click="manage_button()"
+                                v-bind:class="{'disabled': !logged_in}">
+                            <i class="fa fa-plus"></i>  Add
+                        </button>
+                        
+                        <button v-if="managing_stocks" v-on:click="manage_button()"
+                                v-bind:class="{'disabled': !logged_in}">
+                            <i class="fa fa-plus"></i>  Subtract
+                        </button>
+                        
+                        <button v-if="managing_stocks" v-on:click="manage_button()"
+                                v-bind:class="{'disabled': !logged_in}">
+                            <i class="fa fa-plus"></i>  Cancel
+                        </button>
+                    
+                      </div>
+                     
+                    </div>
+                  
+                </div>
+              </div>
+           </div>
+           
+     <!-- drop down for search tab  -->
+           <div class="accordion">
+             <input type="radio" name="group1" id="searchTab">
+           <div>
+             <div class="padded">
+               <h6>look up some shit</h6>
+             </div>
+           </div>
+           </div>
+           
+         </div>
+       </div>
+     </div>
+  </div>
 </div>
 
+<script src="{{=URL('static', 'js/default_index.js')}}"></script>

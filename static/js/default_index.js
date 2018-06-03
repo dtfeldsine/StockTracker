@@ -12,6 +12,15 @@ var app = function() {
             a.push(b[i]);
         }
     };
+    
+    self.get_stocks = function () {
+    };
+    
+    // manage stocks
+    self.manage_button = function () {
+        console.log("javascript manage_button " + self.vue.managing_stocks);
+        self.vue.managing_stocks = !self.vue.managing_stocks;
+    };
 
     // Complete as needed.
     self.vue = new Vue({
@@ -19,13 +28,20 @@ var app = function() {
         delimiters: ['${', '}'],
         unsafeDelimiters: ['!{', '}'],
         data: {
+           logged_in: false,
+           managing_stocks: true,
+           stocks: [],
+           user_email: null,
         },
         methods: {
+           manage_button: self.manage_button,
+           get_stocks: self.get_stocks,
         }
 
     });
 
-
+    self.get_stocks();
+    $("#vue-div").show();
     return self;
 };
 
