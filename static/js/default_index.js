@@ -13,7 +13,13 @@ var app = function() {
         }
     };
     
+    //call to get user stocks, do at beginning
     self.get_stocks = function () {
+       console.log("in get_stocks");
+       $.getJSON(get_stocks_url, function (data) {
+           self.vue.logged_in = data.logged_in;
+           self.vue.stocks = data.stocks;
+       })
     };
     
     // manage stocks
@@ -29,7 +35,7 @@ var app = function() {
         unsafeDelimiters: ['!{', '}'],
         data: {
            logged_in: false,
-           managing_stocks: true,
+           managing_stocks: false,
            stocks: [],
            user_email: null,
         },
@@ -40,6 +46,7 @@ var app = function() {
 
     });
 
+    
     self.get_stocks();
     $("#vue-div").show();
     return self;

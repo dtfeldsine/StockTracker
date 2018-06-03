@@ -2,6 +2,10 @@
 
 {{block head}}
 <script src="{{=URL('static', 'js/vue.js')}}"></script>
+
+<script>
+    var get_stocks_url = "{{=URL('api', 'get_stocks')}}";
+</script>
 {{end}}
 
 <div class="main_content">
@@ -34,6 +38,18 @@
                {{if auth.user is not None:}}
                <div class="padded">
                  <h6>heres your shit</h6>
+                 <div class="container">
+                    <div class="card" style="width:500px; height:200px">
+                     <div>
+                       <div class="white padded rounded">
+                         Example stock
+                       </div>
+                       <div class="black padded rounded">
+                         Example detail
+                       </div>
+                     </div>
+                   </div>
+                </div>
                </div>
                {{else:}}
                <div class="padded">
@@ -55,10 +71,10 @@
                       <div class="card" style="width:500px; height:200px">
                         <div>
                           <div class="white padded rounded">
-                            Front! Mouseover here.
+                            Example stock
                           </div>
                           <div class="black padded rounded">
-                            Back!
+                            Example detail
                           </div>
                         </div>
                       </div>
@@ -83,12 +99,12 @@
                         
                         <button v-if="managing_stocks" v-on:click="manage_button()"
                                 v-bind:class="{'disabled': !logged_in}">
-                            <i class="fa fa-plus"></i>  Subtract
+                            <i class="fa fa-minus"></i>  Subtract
                         </button>
                         
                         <button v-if="managing_stocks" v-on:click="manage_button()"
                                 v-bind:class="{'disabled': !logged_in}">
-                            <i class="fa fa-plus"></i>  Cancel
+                            <i class="fa fa-times"></i>  Cancel
                         </button>
                     
                       </div>
@@ -105,6 +121,14 @@
            <div>
              <div class="padded">
                <h6>look up some shit</h6>
+               <div class="container padded">
+                 <div class="half">
+                   <input type="text" class="fill">
+                 </div>
+                 <button>
+                   Search
+                 </button>
+               </div>
              </div>
            </div>
            </div>
