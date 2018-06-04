@@ -4,8 +4,9 @@
 <script src="{{=URL('static', 'js/vue.js')}}"></script>
 
 <script>
-    var get_stocks_url = "{{=URL('api', 'get_stocks')}}";
+    var get_stocks_url = "{{=URL('api', 'get_stocks', user_signature=True)}}";
     var init_stocks_url = "{{=URL('api', 'init_stocks')}}";
+    var add_stock_url = "{{=URL('api', 'add_stock', user_signature=True)}}";
 </script>
 {{end}}
 
@@ -15,6 +16,7 @@
   
   <!-- this line of code took 5 years off my life span -->
   <div id="vue-div" class="display:none">
+  
      <div class="padded">
        <h2>Welcome to Stock Tracker!</h2> 
        
@@ -93,18 +95,15 @@
                       
                       <div class="button_bar padded">
             
-                        <button v-if="managing_stocks" v-on:click="manage_button()"
-                                v-bind:class="{'disabled': !logged_in}">
+                        <button v-if="managing_stocks" v-on:click="add_stock()">
                             <i class="fa fa-plus"></i>  Add
                         </button>
                         
-                        <button v-if="managing_stocks" v-on:click="manage_button()"
-                                v-bind:class="{'disabled': !logged_in}">
+                        <button v-if="managing_stocks" v-on:click="manage_button()">
                             <i class="fa fa-minus"></i>  Subtract
                         </button>
                         
-                        <button v-if="managing_stocks" v-on:click="manage_button()"
-                                v-bind:class="{'disabled': !logged_in}">
+                        <button v-if="managing_stocks" v-on:click="manage_button()">
                             <i class="fa fa-times"></i>  Cancel
                         </button>
                     

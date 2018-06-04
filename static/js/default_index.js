@@ -13,20 +13,39 @@ var app = function() {
         }
     };
     
+    // Enumerates an array.
+    var enumerate = function(v) { var k=0; return v.map(function(e) {e._idx = k++;});};
+    
     //call to get user stocks, do at beginning
     self.get_stocks = function () {
        console.log("in get_stocks");
        $.getJSON(get_stocks_url, function (data) {
-           self.vue.logged_in = data.logged_in;
+           self.vue.stocks = data.stocks;
+           enumerate(self.vue.stocks);
+       })
+    };
+    
+    
+    self.init_stocks = function () {
+       console.log("in init_stocks");
+       $.getJSON(init_stocks_url, function (data) {
            self.vue.stocks = data.stocks;
        })
     };
     
-    self.init_stocks = function () {
-       console.log("in get_stocks");
-       $.getJSON(init_stocks_url, function (data) {
-           self.vue.stocks = data.stocks;
-       })
+    self.add_stock = function () {
+        self.vue.managing_stocks = !self.vue.managing_stocks;
+        $.post(add_stock_url,
+            {
+                name: self.vue.name,
+                price: self.vue.price,
+                quantity: self.vue.quantity,
+            },
+            //find out what this does
+            function (data) {
+                self.vue.stocks.unshift(data.stock);
+            }
+        );
     };
     
     // manage stocks
@@ -45,11 +64,15 @@ var app = function() {
            managing_stocks: false,
            stocks: [],
            user_email: null,
+           name: "",
+           price: 0,
+           quantity: 0,
         },
         methods: {
            manage_button: self.manage_button,
            get_stocks: self.get_stocks,
            init_stocks: self.init_stocks,
+           add_stock: self.add_stock,
         }
 
     });
