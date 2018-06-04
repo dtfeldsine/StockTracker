@@ -19,8 +19,11 @@ var app = function() {
     //call to get user stocks, do at beginning
     self.get_stocks = function () {
        console.log("in get_stocks");
+       
        $.getJSON(get_stocks_url, function (data) {
            self.vue.stocks = data.stocks;
+           self.vue.logged_in = data.logged_in;
+           console.log("logged in " + self.vue.logged_in)
            enumerate(self.vue.stocks);
        })
     };

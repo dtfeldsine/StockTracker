@@ -91,18 +91,19 @@
                         </div>
                       </div>
                       
-                      <div class="container padded">
+                      <div v-if="logged_in" class="container padded">
                         <label class="quarter right"></label>
                         <button v-if="!managing_stocks" v-on:click="manage_button()">Manage</button>
                       </div>
+                      
                      
                       <div v-if="managing_stocks" class="container padded">
-                        <div class="quarter">
+                        <div v-if="logged_in" class="quarter">
                           <input type="text" class="fill">
                         </div>
                       </div>
                       
-                      <div class="button_bar padded">
+                      <div v-if="logged_in" class="button_bar padded">
             
                         <button v-if="managing_stocks" v-on:click="add_stock()">
                             <i class="fa fa-plus"></i>  Add

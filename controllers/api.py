@@ -20,7 +20,12 @@ def get_stocks():
             user_email = r.user_email,
         )
         stocks.append(stock)
-    return response.json(dict(stocks=stocks))
+    
+    logged_in = auth.user is not None
+    return response.json(dict(
+        stocks=stocks,
+        logged_in=logged_in,
+    ))
     
 #api call for stocks    
 def init_stocks():
