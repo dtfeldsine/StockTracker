@@ -35,6 +35,7 @@ var app = function() {
     
     self.add_stock = function () {
         self.vue.managing_stocks = !self.vue.managing_stocks;
+        console.log("adding");
         $.post(add_stock_url,
             {
                 name: self.vue.name,
@@ -48,11 +49,38 @@ var app = function() {
         );
     };
     
+    self.delete_stock = function(stock_id){
+        console.log("deleting " + stock_id);
+        $.post(del_stock_url,
+            {
+                id: stock_id
+            },
+            function () {
+                var idx = null;
+                for (var i = 0; i < self.vue.stocks.length; i++) {
+                    if (self.vue.stocks[i].id === stock_id) {
+                        idx = i + 1;
+                        self.vue.stocks.splice(idx - 1, 1);
+                        break;
+                    }
+                }
+                if (idx) {
+                }
+            }
+        );
+    };
+    
     // manage stocks
     self.manage_button = function () {
         console.log("javascript manage_button " + self.vue.managing_stocks);
         self.vue.managing_stocks = !self.vue.managing_stocks;
     };
+    
+    self.search_button = function () {
+        console.log("search button pre " + self.vue.searching);
+        self.vue.searching = true;
+        console.log("search button post " + self.vue.searching);
+    }
 
     // Complete as needed.
     self.vue = new Vue({
@@ -62,6 +90,7 @@ var app = function() {
         data: {
            logged_in: false,
            managing_stocks: false,
+           searching: false,
            stocks: [],
            user_email: null,
            name: "",
@@ -69,10 +98,12 @@ var app = function() {
            quantity: 0,
         },
         methods: {
+           search_button: self.search_button,
            manage_button: self.manage_button,
            get_stocks: self.get_stocks,
            init_stocks: self.init_stocks,
            add_stock: self.add_stock,
+           delete_stock: self.delete_stock,
         }
 
     });

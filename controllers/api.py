@@ -12,6 +12,7 @@ def get_stocks():
     stocks = []
     for i, r in enumerate(rows):
         stock = dict(
+            id = r.id,
             name = r.name,
             price = r.price,
             quantity = r.quantity,
@@ -41,3 +42,8 @@ def add_stock():
     )
     t = db.stock(t_id)
     return response.json(dict(stock=t))
+    
+@auth.requires_signature()
+def del_stock():
+    t_id = db(db.stock.id == request.vars.id).delete()
+    return dict()

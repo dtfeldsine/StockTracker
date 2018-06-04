@@ -7,6 +7,7 @@
     var get_stocks_url = "{{=URL('api', 'get_stocks', user_signature=True)}}";
     var init_stocks_url = "{{=URL('api', 'init_stocks')}}";
     var add_stock_url = "{{=URL('api', 'add_stock', user_signature=True)}}";
+    var del_stock_url = "{{=URL('api', 'del_stock', user_signature=True)}}";
 </script>
 {{end}}
 
@@ -41,18 +42,26 @@
                {{if auth.user is not None:}}
                <div class="padded">
                  <h6>heres your shit</h6>
-                 <div class="container">
-                    <div class="card" style="width:500px; height:200px">
-                     <div>
-                       <div class="white padded rounded">
-                         Example stock
-                       </div>
-                       <div class="black padded rounded">
-                         Example detail
-                       </div>
-                     </div>
+                   <div v-for="stock in stocks" class="container padded">
+                    <div class="container">
+                       <div class="card" style="width:500px; height:200px">
+                        <div>
+                          <div class="white padded rounded">
+                            Example stock
+                          </div>
+                          <div class="black padded rounded">
+                            Example detail
+                          </div>
+                        </div>
+                      </div>
+                      <div class="padded">
+                         <button v-on:click="delete_stock(stock.id)">
+                               <i class="fa fa-minus"></i>  Delete
+                         </button>  
+                      </div>
                    </div>
-                </div>
+                
+                  </div>
                </div>
                {{else:}}
                <div class="padded">
@@ -70,7 +79,7 @@
                   <h6>Some trending shit</h6>
                   <!-- put this in a loop for every displayed stock -->
                   <!-- cards for every stock -->
-                    <div class="container">
+                    <div class="container padded">
                       <div class="card" style="width:500px; height:200px">
                         <div>
                           <div class="white padded rounded">
@@ -125,9 +134,22 @@
                  <div class="half">
                    <input type="text" class="fill">
                  </div>
-                 <button>
+                 <button v-on:click="search_button()">
                    Search
                  </button>
+               </div>
+               
+               <div v-if="searching" class="container padded">
+                <div class="card" style="width:500px; height:200px">
+                  <div>
+                    <div class="white padded rounded">
+                      Results here
+                    </div>
+                    <div class="black padded rounded">
+                      More results here
+                    </div>
+                  </div>
+                </div>
                </div>
              </div>
            </div>
