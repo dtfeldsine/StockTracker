@@ -22,6 +22,13 @@ var app = function() {
        })
     };
     
+    self.init_stocks = function () {
+       console.log("in get_stocks");
+       $.getJSON(init_stocks_url, function (data) {
+           self.vue.stocks = data.stocks;
+       })
+    };
+    
     // manage stocks
     self.manage_button = function () {
         console.log("javascript manage_button " + self.vue.managing_stocks);
@@ -42,11 +49,12 @@ var app = function() {
         methods: {
            manage_button: self.manage_button,
            get_stocks: self.get_stocks,
+           init_stocks: self.init_stocks,
         }
 
     });
 
-    
+    self.init_stocks();
     self.get_stocks();
     $("#vue-div").show();
     return self;
