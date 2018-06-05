@@ -3,10 +3,14 @@
 #structures for stocks from iex api
 import numpy as np
 import pandas as pd
+import requests
+import ast
 #stocks are imported as json files with values
 
-
 def get_stocks():
+    
+    user_email = request.vars.user_email
+    rows = db((db.user_images.user_email == user_email)).select(db.user_images.ALL) 
     rows = db().select(db.stock.ALL)
     
     stocks = []
@@ -17,6 +21,9 @@ def get_stocks():
             price = r.price,
             quantity = r.quantity,
             favorite = r.favorite,
+            company_name = r.company_name,
+            company_symbol = r.company_symbol,
+            company_description = r.company_description,
             user_email = r.user_email,
         )
         stocks.append(stock)
@@ -27,23 +34,54 @@ def get_stocks():
         logged_in=logged_in,
     ))
     
+def search_stock():
+    sym = request.vars.search_form
+    r = requests.get('https://api.iextrading.com/1.0/stock/'+sym+'/company')
+    d = ast.literal_eval(r.text)
+    search_stock = []
+    t_id = dict(
+        company_name = d['companyName'],
+        company_symbol = d['symbol'],
+        company_description = d['description'],
+    )
+    search_stock.append(t_id)
+    
+def get_search():
+    return response.json(dict(search_stock=search_stock))
+    
 #api call for stocks    
 def init_stocks():
+    init_stock = []
     sym = "AAPL"
     df_close = pd.DataFrame()
     df_temp = pd.read_json('https://api.iextrading.com/1.0/stock/'+sym+'/chart/3m')
-    #df_temp.head(4)
-    
-    #df_temp = pd.read_json('https://api.iextrading.com/1.0/stock/'+sym+'/company')
-    #dfc_temp.head(4)
+    #t_id = db.stock.insert(
+    #    name = request.vars.name,
+    #    price = request.vars.price,
+    #    quantity = request.vars.quantity,
+    #    
+    #    company_name = d['companyName'],
+    #    company_symbol = d['symbol'],
+    #    company_description = d['description'],
+    #)
+    #t = db.stock(t_id)
+    #db.init
+    #return response.json(dict(stock=t))
     
 @auth.requires_login()
 @auth.requires_signature()
 def add_stock():
+    sym = "AAPL"
+    r = requests.get('https://api.iextrading.com/1.0/stock/'+sym+'/company')
+    d = ast.literal_eval(r.text)
     t_id = db.stock.insert(
         name = request.vars.name,
         price = request.vars.price,
         quantity = request.vars.quantity,
+        
+        company_name = d['companyName'],
+        company_symbol = d['symbol'],
+        company_description = d['description'],
     )
     t = db.stock(t_id)
     return response.json(dict(stock=t))

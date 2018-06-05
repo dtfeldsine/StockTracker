@@ -32,7 +32,7 @@ var app = function() {
     self.init_stocks = function () {
        console.log("in init_stocks");
        $.getJSON(init_stocks_url, function (data) {
-           self.vue.stocks = data.stocks;
+           self.vue.init_stock = data.init_stock;
        })
     };
     
@@ -82,6 +82,17 @@ var app = function() {
     self.search_button = function () {
         console.log("search button pre " + self.vue.searching);
         self.vue.searching = true;
+        $.post(search_url, 
+            {
+                search_form: self.vue.search_form,
+            }
+        )
+        
+        $.getJSON(get_search_url, function (data) {
+            self.vue.search_stock = data.search_stock;
+        }
+        )
+        
         console.log("search button post " + self.vue.searching);
     }
 
@@ -91,6 +102,8 @@ var app = function() {
         delimiters: ['${', '}'],
         unsafeDelimiters: ['!{', '}'],
         data: {
+           init_stock: [],
+           search_stock: [],
            logged_in: false,
            managing_stocks: false,
            searching: false,
@@ -99,6 +112,7 @@ var app = function() {
            name: "",
            price: 0,
            quantity: 0,
+           search_form: "",
         },
         methods: {
            search_button: self.search_button,

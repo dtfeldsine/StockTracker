@@ -8,6 +8,8 @@
     var init_stocks_url = "{{=URL('api', 'init_stocks')}}";
     var add_stock_url = "{{=URL('api', 'add_stock', user_signature=True)}}";
     var del_stock_url = "{{=URL('api', 'del_stock', user_signature=True)}}";
+    var search_url = "{{=URL('api', 'search_stock')}}";
+    var get_search_url = "{{=URL('api', 'get_search')}}";
 </script>
 {{end}}
 
@@ -41,13 +43,15 @@
              <div>
                {{if auth.user is not None:}}
                <div class="padded">
-                 <h6>heres your shit</h6>
+                 <h6>heres your stuff</h6>
                    <div v-for="stock in stocks" class="container padded">
                     <div class="container">
                        <div class="card" style="width:500px; height:200px">
                         <div>
                           <div class="white padded rounded">
-                            Example stock
+                            <h5>${stock.company_name}</h5>
+                            <h6>${stock.company_symbol}</h6>
+                            <div>${stock.company_description}</div>
                           </div>
                           <div class="black padded rounded">
                             Example detail
@@ -76,7 +80,7 @@
              <input type="radio" name="group1" id="trendingTab">
               <div>
                 <div class="padded">
-                  <h6>Some trending shit</h6>
+                  <h6>Some trending stuff</h6>
                   <!-- put this in a loop for every displayed stock -->
                   <!-- cards for every stock -->
                     <div class="container padded">
@@ -99,7 +103,7 @@
                      
                       <div v-if="managing_stocks" class="container padded">
                         <div v-if="logged_in" class="quarter">
-                          <input type="text" class="fill">
+                          <input type="number" class="fill">
                         </div>
                       </div>
                       
@@ -130,10 +134,10 @@
              <input type="radio" name="group1" id="searchTab">
            <div>
              <div class="padded">
-               <h6>look up some shit</h6>
+               <h6>look up some stocks</h6>
                <div class="container padded">
                  <div class="half">
-                   <input type="text" class="fill">
+                   <input v-model="search_form" type="text" class="fill">
                  </div>
                  <button v-on:click="search_button()">
                    Search
@@ -150,6 +154,34 @@
                       More results here
                     </div>
                   </div>
+                </div>
+                
+                <div v-if="logged_in" class="container padded">
+                  <label class="quarter right"></label>
+                  <button v-if="!managing_stocks" v-on:click="manage_button()">Manage</button>
+                </div>
+                
+               
+                <div v-if="managing_stocks" class="container padded">
+                  <div v-if="logged_in" class="quarter">
+                    <input type="number" class="fill">
+                  </div>
+                </div>
+                
+                <div v-if="logged_in" class="button_bar padded">
+      
+                  <button v-if="managing_stocks" v-on:click="add_stock()">
+                      <i class="fa fa-plus"></i>  Add
+                  </button>
+                  
+                  <button v-if="managing_stocks" v-on:click="manage_button()">
+                      <i class="fa fa-minus"></i>  Subtract
+                  </button>
+                  
+                  <button v-if="managing_stocks" v-on:click="manage_button()">
+                      <i class="fa fa-times"></i>  Cancel
+                  </button>
+              
                 </div>
                </div>
              </div>
