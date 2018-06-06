@@ -10,7 +10,7 @@ import ast
 def get_stocks():
     
     user_email = request.vars.user_email
-    rows = db((db.user_images.user_email == user_email)).select(db.user_images.ALL) 
+    rows = db((db.stock.user_email == user_email)).select(db.stock.ALL)
     rows = db().select(db.stock.ALL)
     
     stocks = []
