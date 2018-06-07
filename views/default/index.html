@@ -43,7 +43,7 @@
              <div>
                {{if auth.user is not None:}}
                <div class="padded">
-                 <h6>heres your stuff</h6>
+                 <h6>My Stocks:</h6>
                    <div v-for="stock in stocks" class="container padded">
                     <div v-if="stock.user_email == '{{=auth.user.email}}'" class="container">
                        <div class="card" style="width:500px; height:200px">
@@ -85,7 +85,7 @@
              <input type="radio" name="group1" id="trendingTab">
               <div>
                 <div class="padded">
-                  <h6>Some trending stuff</h6>
+                  <h6>Trending:</h6>
                   <!-- put this in a loop for every displayed stock -->
                   <!-- cards for every stock -->
                     <div v-for="stock in init_stock" class="container padded">
@@ -146,7 +146,7 @@
              <input type="radio" name="group1" id="searchTab">
            <div>
              <div class="padded">
-               <h6>look up some stocks</h6>
+               <h6>Search for Stocks:</h6>
                <div class="container padded">
                  <div class="half">
                    <input v-model="search_form" type="text" class="fill"  placeholder="company symbol here">
@@ -156,7 +156,7 @@
                  </button>
                </div>
               <div v-if="searching && search_list.length == 0">
-                  Invalid symbol!
+                  Invalid Symbol!
               </div>
               <div v-for="stock in search_list">
                <div v-if="searching" class="container padded">
