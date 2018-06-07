@@ -38,6 +38,11 @@ def get_stocks():
             company_symbol = r.company_symbol,
             company_description = r.company_description,
             user_email = r.user_email,
+            day_open = r.day_open,
+            day_high = r.day_high,
+            day_low = r.day_low,
+            day_close = r.day_close,
+            day_volume = r.day_volume,
         )
         stocks.append(stock)
     

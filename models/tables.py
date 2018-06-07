@@ -23,7 +23,7 @@ db.define_table('stock',
                 Field('day_high', 'text'),
                 Field('day_low', 'text'),
                 Field('day_close', 'text'),
-                Field('day_volume', 'integer')
+                Field('day_volume', 'integer'),
                 
                 Field('personal_open', 'text'),
                 Field('personal_high', 'text'),
