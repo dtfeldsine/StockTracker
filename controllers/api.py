@@ -5,7 +5,21 @@ import numpy as np
 import pandas as pd
 import requests
 import ast
+from pandas_datareader import data as web
+from datetime import datetime as dt
 #stocks are imported as json files with values
+
+@auth.requires_login()
+def get_day_stats():
+    start = dt(2017, 1, 1)
+    end = dt.now()
+    df = web.DataReader(
+        'AAPL',
+        'iex',
+        start,
+        end
+    )
+    stocks = []
 
 @auth.requires_login()
 def get_stocks():
@@ -36,6 +50,22 @@ def get_stocks():
 def search_stock():
     sym = request.vars.search_form
     search_list = []
+    
+    start = dt(2018, 1, 1)
+    end = dt.now()
+    df = web.DataReader(
+        sym,
+        'iex',
+        start,
+        end
+    )
+    
+    day_open_read = df.iloc[-1, 0]
+    day_high_read = df.iloc[-1, 1]
+    day_low_read = df.iloc[-1, 2]
+    day_close_read = df.iloc[-1, 3]
+    day_volume_read = int(df.iloc[-1, 4])
+    
     r = requests.get('https://api.iextrading.com/1.0/stock/'+sym+'/company')
     d = ast.literal_eval(r.text)
     search_stock = []
@@ -44,6 +74,11 @@ def search_stock():
         company_name = d['companyName'],
         company_symbol = d['symbol'],
         company_description = d['description'],
+        day_open = day_open_read,
+        day_high = day_high_read,
+        day_low = day_low_read,
+        day_close = day_close_read,
+        day_volume = day_volume_read,
     )
     search_list.append(t_id)
     return response.json(dict(search_list=search_list,
@@ -52,8 +87,70 @@ def search_stock():
 #api call for stocks    
 def init_stocks():
     init_stock = []
-    sym = "AAPL"
     df_close = pd.DataFrame()
+    
+    start = dt(2018, 1, 1)
+    end = dt.now()
+    dfappl = web.DataReader(
+        'AAPL',
+        'iex',
+        start,
+        end
+    )
+    dfgoogl = web.DataReader(
+        'GOOGL',
+        'iex',
+        start,
+        end
+    )
+    dfamzn = web.DataReader(
+        'AMZN',
+        'iex',
+        start,
+        end
+    )
+    dftsla = web.DataReader(
+        'TSLA',
+        'iex',
+        start,
+        end
+    )
+    dfamd = web.DataReader(
+        'AMD',
+        'iex',
+        start,
+        end
+    )
+    
+    day_open_read_appl = dfappl.iloc[-1, 0]
+    day_high_read_appl = dfappl.iloc[-1, 1]
+    day_low_read_appl = dfappl.iloc[-1, 2]
+    day_close_read_appl = dfappl.iloc[-1, 3]
+    day_volume_read_appl = int(dfappl.iloc[-1, 4])
+    
+    day_open_read_googl = dfgoogl.iloc[-1, 0]
+    day_high_read_googl = dfgoogl.iloc[-1, 1]
+    day_low_read_googl = dfgoogl.iloc[-1, 2]
+    day_close_read_googl = dfgoogl.iloc[-1, 3]
+    day_volume_read_googl = int(dfgoogl.iloc[-1, 4])
+    
+    day_open_read_amzn = dfamzn.iloc[-1, 0]
+    day_high_read_amzn = dfamzn.iloc[-1, 1]
+    day_low_read_amzn = dfamzn.iloc[-1, 2]
+    day_close_read_amzn = dfamzn.iloc[-1, 3]
+    day_volume_read_amzn = int(dfamzn.iloc[-1, 4])
+    
+    day_open_read_tsla = dftsla.iloc[-1, 0]
+    day_high_read_tsla = dftsla.iloc[-1, 1]
+    day_low_read_tsla = dftsla.iloc[-1, 2]
+    day_close_read_tsla = dftsla.iloc[-1, 3]
+    day_volume_read_tsla = int(dftsla.iloc[-1, 4])
+    
+    day_open_read_amd = dfamd.iloc[-1, 0]
+    day_high_read_amd = dfamd.iloc[-1, 1]
+    day_low_read_amd = dfamd.iloc[-1, 2]
+    day_close_read_amd = dfamd.iloc[-1, 3]
+    day_volume_read_amd = int(dfamd.iloc[-1, 4])
     
     r_aapl = requests.get('https://api.iextrading.com/1.0/stock/aapl/company')
     d_aapl = ast.literal_eval(r_aapl.text)
@@ -71,6 +168,11 @@ def init_stocks():
         company_name = d_aapl['companyName'],
         company_symbol = d_aapl['symbol'],
         company_description = d_aapl['description'],
+        day_open = day_open_read_appl,
+        day_high = day_high_read_appl,
+        day_low = day_low_read_appl,
+        day_close = day_close_read_appl,
+        day_volume = day_volume_read_appl,
     )
     init_stock.append(t_id)
     t_id = dict(
@@ -78,6 +180,11 @@ def init_stocks():
         company_name = d_googl['companyName'],
         company_symbol = d_googl['symbol'],
         company_description = d_googl['description'],
+        day_open = day_open_read_googl,
+        day_high = day_high_read_googl,
+        day_low = day_low_read_googl,
+        day_close = day_close_read_googl,
+        day_volume = day_volume_read_googl,
     )
     init_stock.append(t_id)
     t_id = dict(
@@ -85,6 +192,11 @@ def init_stocks():
         company_name = d_amzn['companyName'],
         company_symbol = d_amzn['symbol'],
         company_description = d_amzn['description'],
+        day_open = day_open_read_amzn,
+        day_high = day_high_read_amzn,
+        day_low = day_low_read_amzn,
+        day_close = day_close_read_amzn,
+        day_volume = day_volume_read_amzn,
     )
     init_stock.append(t_id)
     t_id = dict(
@@ -92,6 +204,11 @@ def init_stocks():
         company_name = d_tsla['companyName'],
         company_symbol = d_tsla['symbol'],
         company_description = d_tsla['description'],
+        day_open = day_open_read_tsla,
+        day_high = day_high_read_tsla,
+        day_low = day_low_read_tsla,
+        day_close = day_close_read_tsla,
+        day_volume = day_volume_read_tsla,
     )
     init_stock.append(t_id)
     t_id = dict(
@@ -99,6 +216,11 @@ def init_stocks():
         company_name = d_amd['companyName'],
         company_symbol = d_amd['symbol'],
         company_description = d_amd['description'],
+        day_open = day_open_read_amd,
+        day_high = day_high_read_amd,
+        day_low = day_low_read_amd,
+        day_close = day_close_read_amd,
+        day_volume = day_volume_read_amd,
     )
     init_stock.append(t_id)
     #t = db.stock(t_id)
@@ -108,6 +230,21 @@ def init_stocks():
 @auth.requires_login()
 @auth.requires_signature()
 def add_stock():
+    start = dt(2017, 1, 1)
+    end = dt.now()
+    df = web.DataReader(
+        'AAPL',
+        'iex',
+        start,
+        end
+    )
+    
+    day_open_read = df.iloc[-1, 0]
+    day_high_read = df.iloc[-1, 1]
+    day_low_read = df.iloc[-1, 2]
+    day_close_read = df.iloc[-1, 3]
+    day_volume_read = df.iloc[-1, 4]
+
     sym = request.vars.search_form
     r = requests.get('https://api.iextrading.com/1.0/stock/'+sym+'/company')
     d = ast.literal_eval(r.text)
@@ -115,6 +252,12 @@ def add_stock():
         name = request.vars.name,
         price = request.vars.price,
         quantity = request.vars.quantity,
+        
+        day_open = day_open_read,
+        day_high = day_high_read,
+        day_low = day_low_read,
+        day_close = day_close_read,
+        day_volume = day_volume_read,
         
         company_name = d['companyName'],
         company_symbol = d['symbol'],

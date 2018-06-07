@@ -10,7 +10,7 @@
 db.define_table('stock',
                 Field('name'),
                 Field('price', 'integer'),
-                Field('quantity', 'integer'),
+                Field('quantity', 'integer', default=1),
                 Field('favorite', 'boolean', default=False),
                 Field('user_email', default=auth.user.email if auth.user else None),
                 Field('is_public', 'boolean', default=False),
@@ -18,6 +18,18 @@ db.define_table('stock',
                 Field('company_name', 'text'),
                 Field('company_symbol', 'text'),
                 Field('company_description', 'text'),
+                
+                Field('day_open', 'text'),
+                Field('day_high', 'text'),
+                Field('day_low', 'text'),
+                Field('day_close', 'text'),
+                Field('day_volume', 'integer')
+                
+                Field('personal_open', 'text'),
+                Field('personal_high', 'text'),
+                Field('personal_low', 'text'),
+                Field('personal_close', 'text'),
+                Field('personal_volume', 'integer'),
                 )
 
 # after defining tables, uncomment below to enable auditing
