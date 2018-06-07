@@ -23,7 +23,7 @@ var app = function() {
        $.getJSON(get_stocks_url, function (data) {
            self.vue.stocks = data.stocks;
            self.vue.logged_in = data.logged_in;
-           console.log("logged in " + self.vue.logged_in)
+           console.log("logged in " + self.vue.logged_in);
            enumerate(self.vue.stocks);
        })
     };
@@ -41,6 +41,7 @@ var app = function() {
         console.log("adding");
         $.post(add_stock_url,
             {
+                search_form: self.vue.search_form,
                 name: self.vue.name,
                 price: self.vue.price,
                 quantity: self.vue.quantity,
@@ -85,16 +86,13 @@ var app = function() {
         $.post(search_url, 
             {
                 search_form: self.vue.search_form,
-            }
-        )
-        
-        $.getJSON(get_search_url, function (data) {
-            self.vue.search_stock = data.search_stock;
-        }
-        )
-        
+            },
+            function (data) {
+                self.vue.search_list = data.search_list;
+                enumerate(self.vue.search_list);
+            });
         console.log("search button post " + self.vue.searching);
-    }
+    };
 
     // Complete as needed.
     self.vue = new Vue({
@@ -103,7 +101,7 @@ var app = function() {
         unsafeDelimiters: ['!{', '}'],
         data: {
            init_stock: [],
-           search_stock: [],
+           search_list: [],
            logged_in: false,
            managing_stocks: false,
            searching: false,

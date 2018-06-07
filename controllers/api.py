@@ -7,10 +7,9 @@ import requests
 import ast
 #stocks are imported as json files with values
 
+@auth.requires_login()
 def get_stocks():
     
-    user_email = request.vars.user_email
-    rows = db((db.stock.user_email == user_email)).select(db.stock.ALL)
     rows = db().select(db.stock.ALL)
     
     stocks = []
@@ -36,18 +35,19 @@ def get_stocks():
     
 def search_stock():
     sym = request.vars.search_form
+    search_list = []
     r = requests.get('https://api.iextrading.com/1.0/stock/'+sym+'/company')
     d = ast.literal_eval(r.text)
     search_stock = []
     t_id = dict(
+        user_email = "",
         company_name = d['companyName'],
         company_symbol = d['symbol'],
         company_description = d['description'],
     )
-    search_stock.append(t_id)
-    
-def get_search():
-    return response.json(dict(search_stock=search_stock))
+    search_list.append(t_id)
+    return response.json(dict(search_list=search_list,
+    ))
     
 #api call for stocks    
 def init_stocks():
@@ -71,7 +71,7 @@ def init_stocks():
 @auth.requires_login()
 @auth.requires_signature()
 def add_stock():
-    sym = "AAPL"
+    sym = request.vars.search_form
     r = requests.get('https://api.iextrading.com/1.0/stock/'+sym+'/company')
     d = ast.literal_eval(r.text)
     t_id = db.stock.insert(

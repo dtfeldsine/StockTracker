@@ -45,7 +45,7 @@
                <div class="padded">
                  <h6>heres your stuff</h6>
                    <div v-for="stock in stocks" class="container padded">
-                    <div class="container">
+                    <div v-if="stock.user_email == '{{=auth.user.email}}'" class="container">
                        <div class="card" style="width:500px; height:200px">
                         <div>
                           <div class="white padded rounded">
@@ -87,7 +87,7 @@
                       <div class="card" style="width:500px; height:200px">
                         <div>
                           <div class="white padded rounded">
-                            Example stock
+                              Example stock
                           </div>
                           <div class="black padded rounded">
                             Example detail
@@ -144,18 +144,20 @@
                  </button>
                </div>
                
+              <div v-for="stock in search_list">
                <div v-if="searching" class="container padded">
-                <div class="card" style="width:500px; height:200px">
-                  <div>
-                    <div class="white padded rounded">
-                      Results here
+                    <div class="card" style="width:500px; height:200px">
+                      <div>
+                        <div class="white padded rounded">
+                            <h5>${stock.company_name}</h5>
+                            <h6>${stock.company_symbol}</h6>
+                            <div>${stock.company_description}</div>
+                        </div>
+                        <div class="black padded rounded">
+                          More results here
+                        </div>
+                      </div>
                     </div>
-                    <div class="black padded rounded">
-                      More results here
-                    </div>
-                  </div>
-                </div>
-                
                 <div v-if="logged_in" class="container padded">
                   <label class="quarter right"></label>
                   <button v-if="!managing_stocks" v-on:click="manage_button()">Manage</button>
@@ -184,6 +186,9 @@
               
                 </div>
                </div>
+              
+              </div>
+                 
              </div>
            </div>
            </div>
