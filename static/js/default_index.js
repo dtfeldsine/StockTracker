@@ -53,6 +53,23 @@ var app = function() {
         );
     };
     
+    self.add_trending = function (symbol) {
+        self.vue.managing_stocks = !self.vue.managing_stocks;
+        console.log("adding trending");
+        $.post(add_stock_url,
+            {
+                search_form: symbol,
+                name: self.vue.name,
+                price: self.vue.price,
+                quantity: self.vue.quantity,
+            },
+            //find out what this does
+            function (data) {
+                self.vue.stocks.unshift(data.stock);
+            }
+        );
+    }
+    
     self.delete_stock = function(stock_id){
         console.log("deleting " + stock_id);
         $.post(del_stock_url,
@@ -113,6 +130,7 @@ var app = function() {
            search_form: "",
         },
         methods: {
+           add_trending: self.add_trending,
            search_button: self.search_button,
            manage_button: self.manage_button,
            get_stocks: self.get_stocks,

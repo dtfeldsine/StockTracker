@@ -54,19 +54,56 @@ def init_stocks():
     init_stock = []
     sym = "AAPL"
     df_close = pd.DataFrame()
-    df_temp = pd.read_json('https://api.iextrading.com/1.0/stock/'+sym+'/chart/3m')
-    #t_id = db.stock.insert(
-    #    name = request.vars.name,
-    #    price = request.vars.price,
-    #    quantity = request.vars.quantity,
-    #    
-    #    company_name = d['companyName'],
-    #    company_symbol = d['symbol'],
-    #    company_description = d['description'],
-    #)
+    
+    r_aapl = requests.get('https://api.iextrading.com/1.0/stock/aapl/company')
+    d_aapl = ast.literal_eval(r_aapl.text)
+    r_googl = requests.get('https://api.iextrading.com/1.0/stock/googl/company')
+    d_googl = ast.literal_eval(r_googl.text)
+    r_amzn = requests.get('https://api.iextrading.com/1.0/stock/amzn/company')
+    d_amzn = ast.literal_eval(r_amzn.text)
+    r_tsla = requests.get('https://api.iextrading.com/1.0/stock/tsla/company')
+    d_tsla = ast.literal_eval(r_tsla.text)
+    r_amd = requests.get('https://api.iextrading.com/1.0/stock/amd/company')
+    d_amd = ast.literal_eval(r_amd.text)
+    
+    t_id = dict(
+        user_email = "",
+        company_name = d_aapl['companyName'],
+        company_symbol = d_aapl['symbol'],
+        company_description = d_aapl['description'],
+    )
+    init_stock.append(t_id)
+    t_id = dict(
+        user_email = "",
+        company_name = d_googl['companyName'],
+        company_symbol = d_googl['symbol'],
+        company_description = d_googl['description'],
+    )
+    init_stock.append(t_id)
+    t_id = dict(
+        user_email = "",
+        company_name = d_amzn['companyName'],
+        company_symbol = d_amzn['symbol'],
+        company_description = d_amzn['description'],
+    )
+    init_stock.append(t_id)
+    t_id = dict(
+        user_email = "",
+        company_name = d_tsla['companyName'],
+        company_symbol = d_tsla['symbol'],
+        company_description = d_tsla['description'],
+    )
+    init_stock.append(t_id)
+    t_id = dict(
+        user_email = "",
+        company_name = d_amd['companyName'],
+        company_symbol = d_amd['symbol'],
+        company_description = d_amd['description'],
+    )
+    init_stock.append(t_id)
     #t = db.stock(t_id)
     #db.init
-    #return response.json(dict(stock=t))
+    return response.json(dict(init_stock=init_stock))
     
 @auth.requires_login()
 @auth.requires_signature()
