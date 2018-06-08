@@ -54,6 +54,7 @@
                             <div>${stock.company_description}</div>
                           </div>
                           <div class="black padded rounded">
+                          <div class="half left">
                             <h5>Day Statistics:</h5>
                             <div>Open:  $ ${stock.day_open}</div>
                             <div>High:  $ ${stock.day_high}</div>
@@ -61,6 +62,15 @@
                             <div>Close:  $ ${stock.day_close}</div>
                             <div>Volume: ${stock.day_volume} Shares</div>
                           </div>
+                          <div class="half left">
+                            <h5>Personal Statistics:</h5>
+                            <div>Open:  $ ${stock.personal_open}</div>
+                            <div>High:  $ ${stock.personal_high}</div>
+                            <div>Low:  $ ${stock.personal_low}</div>
+                            <div>Close:  $ ${stock.personal_close}</div>
+                            <div>Quantity: ${stock.quantity} Shares</div>
+                          </div>
+                        </div>
                         </div>
                       </div>
                       <div class="padded">
@@ -97,6 +107,7 @@
                             <div>${stock.company_description}</div>
                           </div>
                           <div class="black padded rounded">
+                          <div class="half left">
                             <h5>Day Statistics:</h5>
                             <div>Open:  $ ${stock.day_open}</div>
                             <div>High:  $ ${stock.day_high}</div>
@@ -104,6 +115,7 @@
                             <div>Close:  $ ${stock.day_close}</div>
                             <div>Volume: ${stock.day_volume} Shares</div>
                           </div>
+                        </div>
                         </div>
                       </div>
                       
@@ -168,12 +180,14 @@
                             <div>${stock.company_description}</div>
                         </div>
                         <div class="black padded rounded">
-                          <h5>Day Statistics:</h5>
+                          <div class="half left">
+                            <h5>Day Statistics:</h5>
                             <div>Open:  $ ${stock.day_open}</div>
                             <div>High:  $ ${stock.day_high}</div>
                             <div>Low:  $ ${stock.day_low}</div>
                             <div>Close:  $ ${stock.day_close}</div>
                             <div>Volume: ${stock.day_volume} Shares</div>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -185,7 +199,7 @@
                
                 <div v-if="managing_stocks" class="container padded">
                   <div v-if="logged_in" class="quarter">
-                    <input type="number" class="fill"> <!-- v-model="quantity_form" -->
+                    <input v-model="quantity" type="number" class="fill" placeholder="1"> <!-- v-model="quantity_form" -->
                   </div>
                 </div>
                 

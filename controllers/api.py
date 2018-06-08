@@ -31,6 +31,10 @@ def get_stocks():
             day_low = r.day_low,
             day_close = r.day_close,
             day_volume = r.day_volume,
+            personal_open = r.personal_open,
+            personal_high = r.personal_high,
+            personal_low = r.personal_low,
+            personal_close = r.personal_close,
         )
         stocks.append(stock)
     
@@ -225,7 +229,7 @@ def init_stocks():
 def add_stock():
 
     sym = request.vars.search_form
-    start = dt(2017, 1, 1)
+    start = dt(2018, 1, 1)
     end = dt.now()
     df = web.DataReader(
         sym,
@@ -240,13 +244,13 @@ def add_stock():
     day_close_read = df.iloc[-1, 3]
     day_volume_read = df.iloc[-1, 4]
     
-    #personal_open_read = str(day_open_read * quantity)
-    #personal_high_read = str(day_open_read * quantity)
-    #personal_low_read = str(day_open_read * quantity)
-    #personal_close_read = str(day_open_read * quantity)
-
+    quantity = request.vars.quantity
+        
+    personal_open_read = str(float(day_open_read) * float(quantity))
+    personal_high_read = str(float(day_open_read) * float(quantity))
+    personal_low_read = str(float(day_open_read) * float(quantity))
+    personal_close_read = str(float(day_open_read) * float(quantity))
     
-    #quantity = request.vars.quantity_form
     r = requests.get('https://api.iextrading.com/1.0/stock/'+sym+'/company')
     d = ast.literal_eval(r.text)
     t_id = db.stock.insert(
@@ -260,15 +264,16 @@ def add_stock():
         day_close = day_close_read,
         day_volume = day_volume_read,
         
-        #personal_open = personal_open_read
-        #personal_high = personal_high_read
-        #personal_low = personal_low_read
-        #personal_close = personal_close_read
+        personal_open = personal_open_read,
+        personal_high = personal_high_read,
+        personal_low = personal_low_read,
+        personal_close = personal_close_read,
         
         company_name = d['companyName'],
         company_symbol = d['symbol'],
         company_description = d['description'],
     )
+    
     t = db.stock(t_id)
     return response.json(dict(stock=t))
     

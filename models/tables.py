@@ -25,10 +25,10 @@ db.define_table('stock',
                 Field('day_close', 'text'),
                 Field('day_volume', 'integer'),
                 
-                Field('personal_open', 'text'),
-                Field('personal_high', 'text'),
-                Field('personal_low', 'text'),
-                Field('personal_close', 'text'),
+                Field('personal_open', 'text', default="0"),
+                Field('personal_high', 'text', default="0"),
+                Field('personal_low', 'text', default="0"),
+                Field('personal_close', 'text', default="0"),
                 )
 
 # after defining tables, uncomment below to enable auditing
