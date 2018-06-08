@@ -247,9 +247,9 @@ def add_stock():
     quantity = request.vars.quantity
         
     personal_open_read = str(float(day_open_read) * float(quantity))
-    personal_high_read = str(float(day_open_read) * float(quantity))
-    personal_low_read = str(float(day_open_read) * float(quantity))
-    personal_close_read = str(float(day_open_read) * float(quantity))
+    personal_high_read = str(float(day_high_read) * float(quantity))
+    personal_low_read = str(float(day_low_read) * float(quantity))
+    personal_close_read = str(float(day_close_read) * float(quantity))
     
     r = requests.get('https://api.iextrading.com/1.0/stock/'+sym+'/company')
     d = ast.literal_eval(r.text)
