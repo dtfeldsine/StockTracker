@@ -10,18 +10,6 @@ from datetime import datetime as dt
 #stocks are imported as json files with values
 
 @auth.requires_login()
-def get_day_stats():
-    start = dt(2017, 1, 1)
-    end = dt.now()
-    df = web.DataReader(
-        'AAPL',
-        'iex',
-        start,
-        end
-    )
-    stocks = []
-
-@auth.requires_login()
 def get_stocks():
     
     rows = db().select(db.stock.ALL)
@@ -235,10 +223,12 @@ def init_stocks():
 @auth.requires_login()
 @auth.requires_signature()
 def add_stock():
+
+    sym = request.vars.search_form
     start = dt(2017, 1, 1)
     end = dt.now()
     df = web.DataReader(
-        'AAPL',
+        sym,
         'iex',
         start,
         end
@@ -249,8 +239,14 @@ def add_stock():
     day_low_read = df.iloc[-1, 2]
     day_close_read = df.iloc[-1, 3]
     day_volume_read = df.iloc[-1, 4]
+    
+    #personal_open_read = str(day_open_read * quantity)
+    #personal_high_read = str(day_open_read * quantity)
+    #personal_low_read = str(day_open_read * quantity)
+    #personal_close_read = str(day_open_read * quantity)
 
-    sym = request.vars.search_form
+    
+    #quantity = request.vars.quantity_form
     r = requests.get('https://api.iextrading.com/1.0/stock/'+sym+'/company')
     d = ast.literal_eval(r.text)
     t_id = db.stock.insert(
@@ -263,6 +259,11 @@ def add_stock():
         day_low = day_low_read,
         day_close = day_close_read,
         day_volume = day_volume_read,
+        
+        #personal_open = personal_open_read
+        #personal_high = personal_high_read
+        #personal_low = personal_low_read
+        #personal_close = personal_close_read
         
         company_name = d['companyName'],
         company_symbol = d['symbol'],

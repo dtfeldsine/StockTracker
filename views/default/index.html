@@ -59,7 +59,7 @@
                             <div>High:  $ ${stock.day_high}</div>
                             <div>Low:  $ ${stock.day_low}</div>
                             <div>Close:  $ ${stock.day_close}</div>
-                            <div>Volume: ${stock.day_volume} Total Stocks</div>
+                            <div>Volume: ${stock.day_volume} Shares</div>
                           </div>
                         </div>
                       </div>
@@ -102,7 +102,7 @@
                             <div>High:  $ ${stock.day_high}</div>
                             <div>Low:  $ ${stock.day_low}</div>
                             <div>Close:  $ ${stock.day_close}</div>
-                            <div>Volume: ${stock.day_volume} Total Stocks</div>
+                            <div>Volume: ${stock.day_volume} Shares</div>
                           </div>
                         </div>
                       </div>
@@ -173,7 +173,7 @@
                             <div>High:  $ ${stock.day_high}</div>
                             <div>Low:  $ ${stock.day_low}</div>
                             <div>Close:  $ ${stock.day_close}</div>
-                            <div>Volume: ${stock.day_volume} Total Stocks</div>
+                            <div>Volume: ${stock.day_volume} Shares</div>
                         </div>
                       </div>
                     </div>
@@ -185,7 +185,7 @@
                
                 <div v-if="managing_stocks" class="container padded">
                   <div v-if="logged_in" class="quarter">
-                    <input type="number" class="fill">
+                    <input type="number" class="fill"> <!-- v-model="quantity_form" -->
                   </div>
                 </div>
                 

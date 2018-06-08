@@ -29,7 +29,6 @@ db.define_table('stock',
                 Field('personal_high', 'text'),
                 Field('personal_low', 'text'),
                 Field('personal_close', 'text'),
-                Field('personal_volume', 'integer'),
                 )
 
 # after defining tables, uncomment below to enable auditing

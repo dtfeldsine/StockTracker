@@ -41,6 +41,7 @@ var app = function() {
         console.log("adding");
         $.post(add_stock_url,
             {
+                //quantity_form: self.vue.quantity_form,
                 search_form: self.vue.search_form,
                 name: self.vue.name,
                 price: self.vue.price,
@@ -53,7 +54,7 @@ var app = function() {
         );
     };
     
-    self.add_trending = function (symbol) {
+    self.add_trending = function (symbol, quantity) {
         self.vue.managing_stocks = !self.vue.managing_stocks;
         console.log("adding trending");
         $.post(add_stock_url,
@@ -102,6 +103,7 @@ var app = function() {
         self.vue.searching = true;
         $.post(search_url, 
             {
+                //quantity_form: self.vue.quantity_form,
                 search_form: self.vue.search_form,
             },
             function (data) {
@@ -128,6 +130,7 @@ var app = function() {
            price: 0,
            quantity: 0,
            search_form: "",
+           //quantity_form: "",
         },
         methods: {
            add_trending: self.add_trending,
