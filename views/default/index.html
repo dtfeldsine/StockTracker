@@ -20,6 +20,7 @@
   <!-- this line of code took 5 years off my life span -->
   <div id="vue-div" class="display:none">
   
+    <header class="navy stupid-example"></header>
      <div class="padded">
        <h2>Welcome to Stock Tracker!</h2> 
        
@@ -74,6 +75,7 @@
                         </div>
                       </div>
                       <div class="padded">
+                         <a href="{{=URL('api', 'stock_details')}}" class="btn">Details</a>
                          <button v-on:click="delete_stock(stock.id)">
                                <i class="fa fa-minus"></i>  Delete
                          </button>  
@@ -127,7 +129,7 @@
                      
                       <div v-if="managing_stocks" class="container padded">
                         <div v-if="logged_in" class="quarter">
-                          <input type="number" class="fill">
+                          <input v-model="trend_quantity" type="number" class="fill">
                         </div>
                       </div>
                       

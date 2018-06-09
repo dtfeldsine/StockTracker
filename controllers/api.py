@@ -49,7 +49,7 @@ def search_stock():
     search_list = []
     
     start = dt(2018, 1, 1)
-    end = dt.now()
+    end = dt(2018, 6, 7)
     df = web.DataReader(
         sym,
         'iex',
@@ -65,7 +65,6 @@ def search_stock():
     
     r = requests.get('https://api.iextrading.com/1.0/stock/'+sym+'/company')
     d = ast.literal_eval(r.text)
-    search_stock = []
     t_id = dict(
         user_email = "",
         company_name = d['companyName'],
@@ -276,6 +275,9 @@ def add_stock():
     
     t = db.stock(t_id)
     return response.json(dict(stock=t))
+
+def stock_details():
+    redirect(URL('default', 'details'))
     
 @auth.requires_signature()
 def del_stock():

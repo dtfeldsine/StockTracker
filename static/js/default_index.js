@@ -62,7 +62,7 @@ var app = function() {
                 search_form: symbol,
                 name: self.vue.name,
                 price: self.vue.price,
-                quantity: self.vue.quantity,
+                quantity: self.vue.trend_quantity,
             },
             //find out what this does
             function (data) {
@@ -129,6 +129,7 @@ var app = function() {
            name: "",
            price: 0,
            quantity: 0,
+           trend_quantity: 0,
            search_form: "",
            //quantity_form: "",
         },
