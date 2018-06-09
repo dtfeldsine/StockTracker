@@ -49,7 +49,7 @@ def search_stock():
     search_list = []
     
     start = dt(2018, 1, 1)
-    end = dt(2018, 6, 7)
+    end = dt.now()
     df = web.DataReader(
         sym,
         'iex',
@@ -277,6 +277,7 @@ def add_stock():
     return response.json(dict(stock=t))
 
 def stock_details():
+    sym = request.vars.sym
     redirect(URL('default', 'details'))
     
 @auth.requires_signature()

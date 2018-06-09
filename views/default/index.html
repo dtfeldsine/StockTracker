@@ -10,6 +10,7 @@
     var del_stock_url = "{{=URL('api', 'del_stock', user_signature=True)}}";
     var search_url = "{{=URL('api', 'search_stock')}}";
     var get_search_url = "{{=URL('api', 'get_search')}}";
+    var stock_details_url = "{{=URL('api', 'stock_details')}}";
 </script>
 {{end}}
 
@@ -75,7 +76,7 @@
                         </div>
                       </div>
                       <div class="padded">
-                         <a href="{{=URL('api', 'stock_details')}}" class="btn">Details</a>
+                         <a href="{{=URL('api', 'stock_details(stock.company_symbol)')}}" class="btn">Details</a>
                          <button v-on:click="delete_stock(stock.id)">
                                <i class="fa fa-minus"></i>  Delete
                          </button>  

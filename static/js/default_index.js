@@ -28,6 +28,14 @@ var app = function() {
        })
     };
     
+    self.stock_details = function(company_symbol){
+        $.post(stock_details_url,
+            {
+                sym: company_symbol
+            }
+        )
+        console.log(company_symbol);
+    }    
     
     self.init_stocks = function () {
        console.log("in init_stocks");
