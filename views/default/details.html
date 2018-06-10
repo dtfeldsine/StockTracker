@@ -1,5 +1,12 @@
 {{extend 'layout.html'}}
 
+{{block head}}
+<script src="{{=URL('static', 'js/vue.js')}}"></script>
+
+<script>
+    var get_stock_url = "{{=URL('api', 'stock_details')}}";
+</script>
+{{end}}
 
 <div class="main_content">
 
@@ -7,8 +14,32 @@
   
   <!-- this line of code took 5 years off my life span -->
   <div id="vue-div" class="display:none">
-      
+      <header class="navy stupid-example">
+        <div class="container padded">
+       <h2>Welcome to Stock Tracker!</h2> </div>
+    </header>
+  
+<div class="container">
+  <ul class="menu dark">
+        <li><a class="btn">Info period</a>
+          <ul>
+            <li><a>1 Month</a></li><li>
+            </li><li><a>3 Months</a></li>
+            <li><a>1 Year</a></li>
+            <li><a>5 Years</a></li>
+          </ul>
+        </li>
+      </ul>
+    
+</div>
+    <div class="container">
+    <a class="btn" href="{{=URL('api', 'back')}}">Back</a>
+    </div>
   </div>
 </div>
+
+
+
+
 
 <script src="{{=URL('static', 'js/default_details.js')}}"></script>

@@ -28,14 +28,6 @@ var app = function() {
        })
     };
     
-    self.stock_details = function(company_symbol){
-        $.post(stock_details_url,
-            {
-                sym: company_symbol
-            }
-        )
-        console.log(company_symbol);
-    }    
     
     self.init_stocks = function () {
        console.log("in init_stocks");
@@ -120,7 +112,53 @@ var app = function() {
             });
         console.log("search button post " + self.vue.searching);
     };
-
+    
+    self.stock_details = function(stock_symbol){
+        self.vue.in_details = true;
+        $.post(stock_details_url,
+            {
+                sym: stock_symbol,
+            },
+            function (data) {
+                self.vue.detail_stock = data.detail_stock;
+                enumerate(self.vue.detail_stock);
+            }
+        )
+        console.log(stock_symbol);
+    };    
+    
+    self.back = function() {
+        self.vue.in_details = false;
+    };
+    
+    self.set_one_month = function() {
+        self.vue.one_month = true;
+        self.vue.three_month = false;
+        self.vue.one_year = false;
+        self.vue.three_year = false;
+    };
+    
+    self.set_three_month = function() {
+        self.vue.one_month = false;
+        self.vue.three_month = true;
+        self.vue.one_year = false;
+        self.vue.three_year = false;
+    };
+        
+    self.set_one_year = function() {
+        self.vue.one_month = false;
+        self.vue.three_month = false;
+        self.vue.one_year = true;
+        self.vue.three_year = false;
+    };
+        
+    self.set_three_year = function() {
+        self.vue.one_month = false;
+        self.vue.three_month = false;
+        self.vue.one_year = false;
+        self.vue.three_year = true;
+    };
+    
     // Complete as needed.
     self.vue = new Vue({
         el: "#vue-div",
@@ -132,6 +170,7 @@ var app = function() {
            logged_in: false,
            managing_stocks: false,
            searching: false,
+           in_details: false, 
            stocks: [],
            user_email: null,
            name: "",
@@ -139,7 +178,11 @@ var app = function() {
            quantity: 0,
            trend_quantity: 0,
            search_form: "",
-           //quantity_form: "",
+           detail_stock: [],
+           one_month: true,
+           three_month: false,
+           one_year: false,
+           three_year: false,
         },
         methods: {
            add_trending: self.add_trending,
@@ -149,6 +192,12 @@ var app = function() {
            init_stocks: self.init_stocks,
            add_stock: self.add_stock,
            delete_stock: self.delete_stock,
+           stock_details: self.stock_details,
+           back: self.back,
+           set_one_month: self.set_one_month,
+           set_three_month: self.set_three_month,
+           set_one_year: self.set_one_year,
+           set_three_year: self.set_three_year,
         }
 
     });

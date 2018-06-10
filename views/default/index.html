@@ -21,9 +21,12 @@
   <!-- this line of code took 5 years off my life span -->
   <div id="vue-div" class="display:none">
   
-    <header class="navy stupid-example"></header>
-     <div class="padded">
-       <h2>Welcome to Stock Tracker!</h2> 
+    <header class="navy stupid-example">
+        <div class="container padded">
+       <h2>Welcome to Stock Tracker!</h2> </div>
+    </header>
+      
+     <div v-if="!in_details" class="padded">
        
      <!-- tabs -->
         <div class="container">
@@ -76,7 +79,9 @@
                         </div>
                       </div>
                       <div class="padded">
-                         <a href="{{=URL('api', 'stock_details(stock.company_symbol)')}}" class="btn">Details</a>
+                          <button v-on:click="stock_details(stock.company_symbol)" >
+                              Details
+                          </button>
                          <button v-on:click="delete_stock(stock.id)">
                                <i class="fa fa-minus"></i>  Delete
                          </button>  
@@ -232,6 +237,65 @@
          </div>
        </div>
      </div>
+    <div v-if="in_details" class="padded">
+          
+ <div class="container">
+     <div class="quarter">
+      <button v-on:click="back">Back</button>
+         <div v-for="stock in detail_stock">
+             <div>${stock.company_name}</div>
+             <div>${stock.company_description}</div>
+             <div>${stock.company_symbol}</div>
+         </div>
+    </div>
+ <div class="threequarters">
+     <div class="container">
+     <div class="third">
+       <ul class="menu dark">
+        <li><a class="btn">Info period</a>
+          <ul>
+            <li><a v-on:click="set_one_month">1 Month</a></li><li>
+            </li><li><a v-on:click="set_three_month">3 Months</a></li>
+            <li><a v-on:click="set_one_year">1 Year</a></li>
+            <li><a v-on:click="set_three_year">3 Years</a></li>
+          </ul>
+        </li>
+      </ul>
+     </div>
+     <div class="twothirds">
+     <div v-for="stock in detail_stock">
+         <div v-if="one_month">
+         <div>Average opening price: ${stock.avg1mo_open}</div>
+         <div>Average high price: ${stock.avg1mo_high}</div>
+         <div>Average low price: ${stock.avg1mo_low}</div>
+         <div>Average close price: ${stock.avg1mo_close}</div>
+         </div>
+         <div v-if="three_month">
+         <div>Average opening price: ${stock.avg3mo_open}</div>
+         <div>Average high price: ${stock.avg3mo_high}</div>
+         <div>Average low price: ${stock.avg3mo_low}</div>
+         <div>Average close price: ${stock.avg3mo_close}</div>
+         </div>
+         <div v-if="one_year">
+         <div>Average opening price: ${stock.avg1yr_open}</div>
+         <div>Average high price: ${stock.avg1yr_high}</div>
+         <div>Average low price: ${stock.avg1yr_low}</div>
+         <div>Average close price: ${stock.avg1yr_close}</div>
+         </div>
+         <div v-if="three_year">
+         <div>Average opening price: ${stock.avg3yr_open}</div>
+         <div>Average high price: ${stock.avg3yr_high}</div>
+         <div>Average low price: ${stock.avg3yr_low}</div>
+         <div>Average close price: ${stock.avg3yr_close}</div>
+         </div>
+      </div>
+     </div>
+     </div>
+    </div>
+</div>
+    
+      </div>
+      
   </div>
 </div>
 
