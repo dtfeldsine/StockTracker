@@ -103,7 +103,7 @@
              <input type="radio" name="group1" id="trendingTab">
               <div>
                 <div class="padded">
-                  <h6>Trending:</h6>
+                  <h6>Trending Stocks:</h6>
                   <!-- put this in a loop for every displayed stock -->
                   <!-- cards for every stock -->
                     <div v-for="stock in init_stock" class="container padded">
@@ -166,7 +166,7 @@
              <input type="radio" name="group1" id="searchTab">
            <div>
              <div class="padded">
-               <h6>Search for Stocks:</h6>
+               <h6>Search for Stocks (please enter a stock symbol):</h6>
                <div class="container padded">
                  <div class="half">
                    <input v-model="search_form" type="text" class="fill"  placeholder="company symbol here">
@@ -240,18 +240,18 @@
     <div v-if="in_details" class="padded">
           
  <div class="container">
-     <div class="quarter">
+     <div class="half">
       <button v-on:click="back">Back</button>
          <div v-for="stock in detail_stock">
-             <div>${stock.company_name}</div>
-             <div>${stock.company_description}</div>
-             <div>${stock.company_symbol}</div>
+             <h2>${stock.company_name}</h2>
+			 <h3>${stock.company_symbol}</h3>
+             <h6>${stock.company_description}</h6>
          </div>
     </div>
- <div class="threequarters">
+ <div class="half">
      <div class="container">
-     <div class="third">
-       <ul class="menu dark">
+     <div class="quarter">
+       <ul class="menu dark padded">
         <li><a class="btn">Info period</a>
           <ul>
             <li><a v-on:click="set_one_month">1 Month</a></li><li>
@@ -262,40 +262,49 @@
         </li>
       </ul>
      </div>
-     <div class="twothirds">
+     <div class="threequarters">
      <div v-for="stock in detail_stock">
          <div v-if="one_month">
-         <div>Average opening price: ${stock.avg1mo_open}</div>
-         <div>Average high price: ${stock.avg1mo_high}</div>
-         <div>Average low price: ${stock.avg1mo_low}</div>
-         <div>Average close price: ${stock.avg1mo_close}</div>
+		 <h2> One Month Statistics </h2>
+         <h6>Average opening price:  $ ${stock.avg1mo_open}</h6>
+         <h6>Average high price:  $ ${stock.avg1mo_high}</h6>
+         <h6>Average low price:  $ ${stock.avg1mo_low}</h6>
+         <h6>Average close price:  $ ${stock.avg1mo_close}</h6>
          </div>
          <div v-if="three_month">
-         <div>Average opening price: ${stock.avg3mo_open}</div>
-         <div>Average high price: ${stock.avg3mo_high}</div>
-         <div>Average low price: ${stock.avg3mo_low}</div>
-         <div>Average close price: ${stock.avg3mo_close}</div>
+		 <h2> Three Month Statistics </h2>
+         <h6>Average opening price:  $ ${stock.avg3mo_open}</h6>
+         <h6>Average high price:  $ ${stock.avg3mo_high}</h6>
+         <h6>Average low price:  $ ${stock.avg3mo_low}</h6>
+         <h6>Average close price:  $ ${stock.avg3mo_close}</h6>
          </div>
          <div v-if="one_year">
-         <div>Average opening price: ${stock.avg1yr_open}</div>
-         <div>Average high price: ${stock.avg1yr_high}</div>
-         <div>Average low price: ${stock.avg1yr_low}</div>
-         <div>Average close price: ${stock.avg1yr_close}</div>
+		 <h2> One year Statistics </h2>
+         <h6>Average opening price:  $ ${stock.avg1yr_open}</h6>
+         <h6>Average high price:  $ ${stock.avg1yr_high}</h6>
+         <h6>Average low price:  $ ${stock.avg1yr_low}</h6>
+         <h6>Average close price:  $ ${stock.avg1yr_close}</h6>
          </div>
          <div v-if="three_year">
-         <div>Average opening price: ${stock.avg3yr_open}</div>
-         <div>Average high price: ${stock.avg3yr_high}</div>
-         <div>Average low price: ${stock.avg3yr_low}</div>
-         <div>Average close price: ${stock.avg3yr_close}</div>
+		 <h2> Three Year Statistics </h2>
+         <h6>Average opening price:  $ ${stock.avg3yr_open}</h6>
+         <h6>Average high price:  $ ${stock.avg3yr_high}</h6>
+         <h6>Average low price:  $ ${stock.avg3yr_low}</h6>
+         <h6>Average close price:  $ ${stock.avg3yr_close}</h6>
          </div>
       </div>
      </div>
      </div>
     </div>
-</div>
-    
-      </div>
       
+  </div>
+  <div v-for="stock in detail_stock">
+    <h3> Personal Statistics </h3>
+	<h6> Personal opening price:  $ ${stock.personal_open}</h6>
+	<h6> Personal high price:  $ ${stock.personal_high}</h6>
+	<h6> Personal low price:  $ ${stock.personal_low}</h6>
+	<h6> Personal close price:  $ ${stock.personal_close}</h6>
+	<h6> Quantity owned: ${stock.quantity} </h6>
   </div>
 </div>
 

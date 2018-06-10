@@ -46,7 +46,7 @@ def get_stocks():
     ))
     
 def search_stock():
-    sym = request.vars.search_form
+    sym = request.vars.search_form.upper()
     search_list = []
     
     start = dt(2018, 1, 1)
@@ -228,7 +228,7 @@ def init_stocks():
 @auth.requires_signature()
 def add_stock():
 
-    sym = request.vars.search_form
+    sym = request.vars.search_form.upper()
     start = dt(2018, 1, 1)
     end = dt.now()
     df = web.DataReader(
@@ -279,7 +279,7 @@ def add_stock():
 
 def stock_details():
     t_id = db(db.stock.company_symbol == request.vars.sym).select().first()
-    sym = request.vars.sym
+    sym = request.vars.sym.upper()
     detail_stock = []
 
     month1 = dt.now() - td(days=31)
@@ -333,25 +333,25 @@ def stock_details():
     list3yr_low = df3yr.iloc[:,2]
     list3yr_close = df3yr.iloc[:,3]
 
-    avg1mo_openr = average_list(list1mo_open)
-    avg1mo_highr = average_list(list1mo_high)
-    avg1mo_lowr = average_list(list1mo_low)
-    avg1mo_closer = average_list(list1mo_close)
+    avg1mo_openr = "{0:.2f}".format(average_list(list1mo_open))
+    avg1mo_highr = "{0:.2f}".format(average_list(list1mo_high))
+    avg1mo_lowr = "{0:.2f}".format(average_list(list1mo_low))
+    avg1mo_closer = "{0:.2f}".format(average_list(list1mo_close))
 
-    avg3mo_openr = average_list(list3mo_open)
-    avg3mo_highr = average_list(list3mo_high)
-    avg3mo_lowr = average_list(list3mo_low)
-    avg3mo_closer = average_list(list3mo_close)
+    avg3mo_openr = "{0:.2f}".format(average_list(list3mo_open))
+    avg3mo_highr = "{0:.2f}".format(average_list(list3mo_high))
+    avg3mo_lowr = "{0:.2f}".format(average_list(list3mo_low))
+    avg3mo_closer = "{0:.2f}".format(average_list(list3mo_close))
 
-    avg1yr_openr = average_list(list1yr_open)
-    avg1yr_highr = average_list(list1yr_high)
-    avg1yr_lowr = average_list(list1yr_low)
-    avg1yr_closer = average_list(list1yr_close)
+    avg1yr_openr = "{0:.2f}".format(average_list(list1yr_open))
+    avg1yr_highr = "{0:.2f}".format(average_list(list1yr_high))
+    avg1yr_lowr = "{0:.2f}".format(average_list(list1yr_low))
+    avg1yr_closer = "{0:.2f}".format(average_list(list1yr_close))
 
-    avg3yr_openr = average_list(list3yr_open)
-    avg3yr_highr = average_list(list3yr_high)
-    avg3yr_lowr = average_list(list3yr_low)
-    avg3yr_closer = average_list(list3yr_close)
+    avg3yr_openr = "{0:.2f}".format(average_list(list3yr_open))
+    avg3yr_highr = "{0:.2f}".format(average_list(list3yr_high))
+    avg3yr_lowr = "{0:.2f}".format(average_list(list3yr_low))
+    avg3yr_closer = "{0:.2f}".format(average_list(list3yr_close))
 
     t_id.update_record(
         avg1mo_open = avg1mo_openr,
