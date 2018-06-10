@@ -29,6 +29,26 @@ db.define_table('stock',
                 Field('personal_high', 'text', default="0"),
                 Field('personal_low', 'text', default="0"),
                 Field('personal_close', 'text', default="0"),
+				
+				Field('avg1mo_open', 'text'),
+				Field('avg1mo_high', 'text'),
+				Field('avg1mo_low', 'text'),
+				Field('avg1mo_close', 'text'),
+				
+				Field('avg3mo_open', 'text'),
+				Field('avg3mo_high', 'text'),
+				Field('avg3mo_low', 'text'),
+				Field('avg3mo_close', 'text'),
+				
+				Field('avg1yr_open', 'text'),
+				Field('avg1yr_high', 'text'),
+				Field('avg1yr_low', 'text'),
+				Field('avg1yr_close', 'text'),
+				
+				Field('avg3yr_open', 'text'),
+				Field('avg3yr_high', 'text'),
+				Field('avg3yr_low', 'text'),
+				Field('avg3yr_close', 'text')
                 )
 
 # after defining tables, uncomment below to enable auditing

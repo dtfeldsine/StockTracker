@@ -7,6 +7,7 @@ import requests
 import ast
 from pandas_datareader import data as web
 from datetime import datetime as dt
+from datetime import timedelta as td
 #stocks are imported as json files with values
 
 @auth.requires_login()
@@ -277,8 +278,108 @@ def add_stock():
     return response.json(dict(stock=t))
 
 def stock_details():
-    redirect(URL('default', 'details'))
     
+	redirect(URL('default', 'details'))
+	
+	sym = request.vars.sym
+	
+	month1 = dt.now() - td(days=31)
+	month3 = dt.now() - td(days=93)
+	year1 = dt.now() - td(days=365)
+	year3 = dt.now() - td(days=3*365)
+	end = dt.now()
+	
+	df1mo = web.DataReader(
+        sym,
+        'iex',
+        month1,
+        end
+    )
+	df3mo = web.DataReader(
+        sym,
+        'iex',
+        month3,
+        end
+    )
+	df1yr = web.DataReader(
+        sym,
+        'iex',
+        year1,
+        end
+    )
+	df3yr = web.DataReader(
+        sym,
+        'iex',
+        year3,
+        end
+    )
+	
+	list1mo_open = df1mo.iloc[:,0]
+	list1mo_high = df1mo.iloc[:,1]
+	list1mo_low = df1mo.iloc[:,2]
+	list1mo_close = df1mo.iloc[:,3]
+	
+	list3mo_open = df3mo.iloc[:,0]
+	list3mo_high = df3mo.iloc[:,1]
+	list3mo_low = df3mo.iloc[:,2]
+	list3mo_close = df3mo.iloc[:,3]
+	
+	list1yr_open = df1yr.iloc[:,0]
+	list1yr_high = df1yr.iloc[:,1]
+	list1yr_low = df1yr.iloc[:,2]
+	list1yr_close = df1yr.iloc[:,3]
+	
+	list3yr_open = df3yr.iloc[:,0]
+	list3yr_high = df3yr.iloc[:,1]
+	list3yr_low = df3yr.iloc[:,2]
+	list3yr_close = df3yr.iloc[:,3]
+	
+	avg1mo_openr = average_list(list1mo_open)
+	avg1mo_highr = average_list(list1mo_high)
+	avg1mo_lowr = average_list(list1mo_low)
+	avg1mo_closer = average_list(list1mo_close)
+	
+	avg3mo_openr = average_list(list3mo_open)
+	avg3mo_highr = average_list(list3mo_high)
+	avg3mo_lowr = average_list(list3mo_low)
+	avg3mo_closer = average_list(list3mo_close)
+	
+	avg1yr_openr = average_list(list1yr_open)
+	avg1yr_highr = average_list(list1yr_high)
+	avg1yr_lowr = average_list(list1yr_low)
+	avg1yr_closer = average_list(list1yr_close)
+	
+	avg3yr_openr = average_list(list3yr_open)
+	avg3yr_highr = average_list(list3yr_high)
+	avg3yr_lowr = average_list(list3yr_low)
+	avg3yr_closer = average_list(list3yr_close)
+	
+	t_id = db.stock.insert(
+        avg1mo_open = avg1mo_openr,
+		avg1mo_high = avg1mo_highr,
+		avg1mo_low = avg1mo_lowr,
+		avg1mo_close = avg1mo_closer,
+		
+		avg3mo_open = avg3mo_openr,
+		avg3mo_high = avg3mo_highr,
+		avg3mo_low = avg3mo_lowr,
+		avg3mo_close = avg3mo_closer,
+		
+		avg1yr_open = avg1yr_openr,
+		avg1yr_high = avg1yr_highr,
+		avg1yr_low = avg1yr_lowr,
+		avg1yr_close = avg1yr_closer,
+		
+		avg3yr_open = avg3yr_openr,
+		avg3yr_high = avg3yr_highr,
+		avg3yr_low = avg3yr_lowr,
+		avg3yr_close = avg3yr_closer,
+    )
+	
+def average_list(lst):
+	return (sum(lst)/len(lst))
+	
+	
 @auth.requires_signature()
 def del_stock():
     t_id = db(db.stock.id == request.vars.id).delete()
