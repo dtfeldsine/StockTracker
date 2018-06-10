@@ -278,10 +278,8 @@ def add_stock():
     return response.json(dict(stock=t))
 
 def stock_details():
-    
-	redirect(URL('default', 'details'))
 	
-	sym = request.vars.sym
+	sym = "AAPL"
 	
 	month1 = dt.now() - td(days=31)
 	month3 = dt.now() - td(days=93)
@@ -375,6 +373,8 @@ def stock_details():
 		avg3yr_low = avg3yr_lowr,
 		avg3yr_close = avg3yr_closer,
     )
+	
+	redirect(URL('default', 'details'))
 	
 def average_list(lst):
 	return (sum(lst)/len(lst))
